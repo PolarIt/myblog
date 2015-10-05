@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load custom_markdown %}
+
+{% block title %} Add article {% endblock %}   
+
+{% block content %} 
+
+<form action="" method="post">
+    {% csrf_token %} 
+    <div class="field">
+        <label for="id_caption">Title: </label>
+        {% if form.caption.errors %}
+        <ol>
+            {% for error in form.caption.errors %}
+            <strong>{{ error|escape }}</strong>
+            {% endfor %}
+        </ol>
+        {% endif %}
+        {{ form.caption }}
+    </div>
+    <div class="field">        
+        <label for="id_content">Content: </label>
+        {% if form.content.errors %}
+        <ol>
+            {% for error in form.content.errors %}
+            <strong>{{ error|escape }}</strong>
+            {% endfor %}
+        </ol>
+        {% endif %}
+        {{ form.content }}
+    </div>
+    <div class="field">
+        <label for="id_tag">tags</label>
+        {% if tag.tag_name.errors %}
+        <ol>
+            {% for error in tag.tag_name.errors %}
+            <strong>{{ error|escape }}</strong>
+            {% endfor %}
+        </ol>
+        {% endif %}
+        {{ tag.tag_name }}
+    </div>
+    <div class="form-actions">
+        <input class="btn btn-primary" type="submit" value="save and add">
+    </div>
+</form>
+{% endblock %}
