@@ -1,22 +1,20 @@
 {% extends "base.html" %}
-{% load custom_markdown %}
-
-{% block title %} Add article {% endblock %}   
+{% load custom_markdown %}   
 
 {% block content %} 
 
 <form action="" method="post">
     {% csrf_token %} 
     <div class="field">
-        <label for="id_caption">Title: </label>
-        {% if form.caption.errors %}
+        <label for="id_title">Title: </label>
+        {% if form.title.errors %}
         <ol>
-            {% for error in form.caption.errors %}
+            {% for error in form.title.errors %}
             <strong>{{ error|escape }}</strong>
             {% endfor %}
         </ol>
         {% endif %}
-        {{ form.caption }}
+        {{ form.title }}
     </div>
     <div class="field">        
         <label for="id_content">Content: </label>
@@ -30,7 +28,7 @@
         {{ form.content }}
     </div>
     <div class="field">
-        <label for="id_tag">tags</label>
+        <label for="id_tag_name">tags</label>
         {% if tag.tag_name.errors %}
         <ol>
             {% for error in tag.tag_name.errors %}
@@ -45,3 +43,5 @@
     </div>
 </form>
 {% endblock %}
+
+

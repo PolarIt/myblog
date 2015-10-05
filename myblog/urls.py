@@ -24,4 +24,6 @@ urlpatterns = patterns('',
     url(r'^aboutme/$', 'article.views.aboutme', name = 'aboutme'),
     url(r'^tag(?P<tag>\w+)/$', 'article.views.search_tag', name = 'search_tag'),
     url(r'^search/$','article.views.blog_search', name = 'search'),
+    url(r'^add/$','article.views.add_blog',name='add_blog'),
+    url(r'^(?P<id>\w+)/del/$','article.views.del_blog',name='del_blog'),
 )
