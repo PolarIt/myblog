@@ -30,6 +30,12 @@
                     <li class="nav-item">
                         <a class="button-success pure-button" href="/add">Add</a>
                     </li>
+                    <br></br>
+                    <li>
+                    <form class="pure-form" action="/search/" method="get">
+                    <input class="pure-input-3-3" type="text" name="s" placeholder="search">
+                    </form>
+                    </li>
                 </ul>
             </nav>
         </div>
@@ -38,8 +44,6 @@
 
     <div class="content pure-u-1 pure-u-md-3-4">
         <div>
-            {% block title %}
-            {% endblock %}
             {% block content %}
             {% endblock %}
             <div class="footer">
