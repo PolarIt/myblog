@@ -5,14 +5,16 @@ from django.core.urlresolvers import reverse
 # Create your models here.
 
 class Tag(models.Model):
-    tag_name = models.CharField(max_length=20)
+    """docstring for Tags"""
+    tag_name = models.CharField(max_length = 20)
 
     def __str__(self):
         return self.tag_name
 
 class Article(models.Model) :
+    """docstring for Blogs"""
     title = models.CharField(max_length = 50)  #博客题目
-    tags = models.ManyToManyField(Tag)  #博客分类 可为空
+    tags = models.ManyToManyField(Tag)  #博客分类
     date_time = models.DateTimeField(auto_now_add = True)  #博客日期
     content = models.TextField(blank = True, null = True)  #博客文章正文
 

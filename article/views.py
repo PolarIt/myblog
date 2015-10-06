@@ -40,10 +40,12 @@ def aboutme(request) :
 
 def search_tag(request, tag) :
     try:
-        post_list = Article.objects.filter(tags__iexact = tag) #contains
+        tag = str(tag)
+        post_list = Article.objects.filter(tags__iexact = tag)
+        tags = Tag.objects.all()
     except Article.DoesNotExist :
         raise Http404
-    return render(request, 'home.html', {'post_list' : post_list})
+    return render(request, 'home.html', {'post_list' : post_list, 'tags': tags})
 
 def blog_search(request):
     if 's' in request.GET:
@@ -76,17 +78,17 @@ def add_blog(request):
         form = BlogForm(request.POST)
         tag = TagForm(request.POST)
         if form.is_valid() and tag.is_valid():
-            cd = form.cleaned_data
             cdtag = tag.cleaned_data
+            cd = form.cleaned_data
             tagname = cdtag['tag_name']
             for taglist in tagname.split():
-                Article.objects.get_or_create(tag_name=taglist.strip())
+                Tag.objects.get_or_create(tag_name=taglist.strip())
             title = cd['title']
             content = cd['content']
             blog = Article(title=title,content=content)
             blog.save()
             for taglist in tagname.split():
-                blog.tags.add(Article.objects.get(tag_name=taglist.strip()))
+                blog.tags.add(Tag.objects.get(tag_name=taglist.strip()))
                 blog.save()
             id = Article.objects.order_by('-date_time')[0].id
             return HttpResponseRedirect('/%s/' % id)

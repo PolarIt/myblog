@@ -3,21 +3,27 @@
 
 {% block content %}
 <div class="posts">
-        <section class="post">
+        <section>
             <header class="post-header">
                 <h2 class="post-title">{{ post.title }}</h2>
 
                     <p class="post-meta">
                         Time: <a class="post-author" href="#">{{ post.date_time|date:'Y /m /d'}}</a>&nbsp&nbsp
-                        Tags: <a class="post-category post-category-pure" href="#">{{ post.tags }}</a>&nbsp&nbsp
+                        Tags:
+                        {% for tags in post.tags.all %}
+                        <a class="post-category post-category-pure" href="{% url 'search_tag' tag=tags %}">
+                        {{ tags }}
+                        {% endfor %}
+                        </a>&nbsp&nbsp
                     </p>
-                    <a class="post-category post-category-pure" href="{% url 'del_blog' id=post.id %}">del</a>
+
             </header>
 
                 <div class="post-description">
                     <p>
                         {{ post.content|custom_markdown }}
                     </p>
+                    <a class="post-category post-category-pure" href="{% url 'del_blog' id=post.id %}">delete this blog</a>
                 </div>
         </section>
         
