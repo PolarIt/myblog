@@ -28,6 +28,9 @@ class Article(models.Model) :
     def __str__(self) :
         return self.title
 
+    def __str__(self) :
+        return list(self.tag_name)
+
     def save(self, *args, **kwargs):
         super(Article, self).save()
         for i in self.taglist:

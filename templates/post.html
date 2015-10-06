@@ -23,6 +23,7 @@
                     <p>
                         {{ post.content|custom_markdown }}
                     </p>
+                    <a class="post-category post-category-pure" href="{% url 'update' id=post.id %}">update this blog</a>
                     <a class="post-category post-category-pure" href="{% url 'del_blog' id=post.id %}">delete this blog</a>
                 </div>
         </section>

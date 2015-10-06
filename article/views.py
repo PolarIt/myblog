@@ -40,9 +40,8 @@ def aboutme(request) :
 
 def search_tag(request, tag) :
     try:
-        tag = str(tag)
-        post_list = Article.objects.filter(tags__iexact = tag)
-        tags = Tag.objects.all()
+        tags = Tag.objects.filter(tag_name__iexact = tag)
+        post_list = Article.objects.filter(tags__iexact = tags)
     except Article.DoesNotExist :
         raise Http404
     return render(request, 'home.html', {'post_list' : post_list, 'tags': tags})
@@ -96,3 +95,51 @@ def add_blog(request):
         form = BlogForm()
         tag = TagForm()
     return render(request, 'add.html', {'form': form, 'tag': tag})
+
+def update(request, id):
+    id = id
+    if request.method == 'POST':
+        form = BlogForm(request.POST)
+        tag = TagForm(request.POST)
+        if form.is_valid() and tag.is_valid():
+            cdtag = tag.cleaned_data
+            cd = form.cleaned_data
+            tagname = cdtag['tag_name']
+            tagnamelist = tagname.split()
+            for taglist in tagnamelist:
+                Tag.objects.get_or_create(tag_name=taglist.strip())
+            title = cd['title']
+            content = cd['content']
+            blog = Article.objects.get(id=id)
+            if blog:
+                blog.title = title
+                blog.content = content
+                blog.save()
+                for taglist in tagnamelist:
+                    blog.tags.add(Tag.objects.get(tag_name=taglist.strip()))
+                    blog.save()
+                tags = blog.tags.all()
+                for tagname in tags:
+                    tagname = str(tagname)
+                    if tagname not in tagnamelist:
+                        notag = blog.tags.get(tag_name=tagname)
+                        blog.tags.remove(notag)
+            else:
+                blog = Article(title=blog.title, content=blog.content)
+                blog.save()
+            return HttpResponseRedirect('/%s/' % id)
+    else:
+        try:
+            blog = Article.objects.get(id=id)
+        except Exception:
+            raise Http404
+        form = BlogForm(initial={'title': blog.title, 'content': blog.content}, auto_id=False)
+        tags = blog.tags.all()
+        if tags:
+            taginit = ''
+            for x in tags:
+                taginit += str(x) + ' '
+            tag = TagForm(initial={'tag_name': taginit})
+        else:
+            tag = TagForm()
+    return render(request,'add.html',{'blog': blog, 'form': form, 'id': id, 'tag': tag})

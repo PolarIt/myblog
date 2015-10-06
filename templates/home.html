@@ -10,9 +10,9 @@
 
                     <p class="post-meta">
                         Time: <a class="post-author" href="#">{{ post.date_time |date:'Y M d'}}</a>&nbsp&nbsp
-                        Tags: 
-                        <a class="post-category post-category-pure" href="#">
+                        Tags:
                         {% for tags in post.tags.all %}
+                        <a class="post-category post-category-pure" href="{% url 'search_tag' tag=tags %}">
                         {{ tags }}
                         {% endfor %}
                         </a>&nbsp&nbsp

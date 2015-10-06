@@ -26,4 +26,5 @@ urlpatterns = patterns('',
     url(r'^search/$','article.views.blog_search', name = 'search'),
     url(r'^add/$','article.views.add_blog',name='add_blog'),
     url(r'^(?P<id>\w+)/del/$','article.views.del_blog',name='del_blog'),
+    url(r'^(?P<id>\w+)/update/$','article.views.update',name='update'),
 )
