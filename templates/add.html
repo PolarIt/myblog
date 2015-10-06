@@ -16,6 +16,7 @@
         {% endif %}
         {{ form.title }}
     </div>
+    </br>
     <div class="field">        
         <label for="id_content">Content: </label>
         {% if form.content.errors %}
@@ -27,8 +28,9 @@
         {% endif %}
         {{ form.content }}
     </div>
+    </br>
     <div class="field">
-        <label for="id_tag_name">tags</label>
+        <label for="id_tag_name">Tags:</label>
         {% if tag.tag_name.errors %}
         <ol>
             {% for error in tag.tag_name.errors %}
@@ -38,6 +40,7 @@
         {% endif %}
         {{ tag.tag_name }}
     </div>
+    </br>
     <div class="form-actions">
         <input class="btn btn-primary" type="submit" value="save and add">
     </div>
