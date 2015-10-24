@@ -14,17 +14,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
 from django.conf.urls import patterns, include, url
-from django.contrib import admin
+from rest_framework.routers import DefaultRouter
+from blog import views
+
+router = DefaultRouter()
+router.register(r'post', views.PostViewSet)
+router.register(r'category', views.CategoryViewSet)
+
 
 urlpatterns = patterns('',
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^$', 'article.views.home', name = 'home'),
-    url(r'^(?P<id>\d+)/$', 'article.views.detail', name='detail'),
-    url(r'^archives/$', 'article.views.archives', name = 'archives'),
-    url(r'^aboutme/$', 'article.views.aboutme', name = 'aboutme'),
-    url(r'^tag(?P<tag>\w+)/$', 'article.views.search_tag', name = 'search_tag'),
-    url(r'^search/$','article.views.blog_search', name = 'search'),
-    url(r'^add/$','article.views.add_blog',name='add_blog'),
-    url(r'^(?P<id>\w+)/del/$','article.views.del_blog',name='del_blog'),
-    url(r'^(?P<id>\w+)/update/$','article.views.update',name='update'),
+    url(r'^', include(router.urls)),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 )
